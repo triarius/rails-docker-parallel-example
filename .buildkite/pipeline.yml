@@ -1,7 +1,26 @@
 agents:
   queue: kubernetes
 steps:
+  - name: ":docker: Build test image"
+    key: build-docker
+    plugins:
+      - kubernetes:
+          podSpec:
+            serviceAccount: ecr-push
+            containers:
+              - name: builder
+                image: buildkite/agent:3.44.0
+                command:
+                  - scripts/ci/build_image.sh
+                volumeMounts:
+                  - name: buildkit-client
+                    mountPath: /buildkit/certs
+            volumes:
+              - name: buildkit-client
+                secret:
+                  secretName: buildkit-client-certs
   - label: ":rspec:"
+    depends_on: build-docker
     parallelism: 20
     env:
       RAILS_ENV: test
@@ -17,6 +36,8 @@ steps:
             - image: tutum/memcached:latest
           containers:
             podSpec:
-              - image: debian:latest
-                command:
-                  - scripts/ci/parallel_specs.sh
+              serviceAccount: ecr-push
+              containers:
+                - image: debian:latest
+                  command:
+                    - scripts/ci/parallel_specs.sh
