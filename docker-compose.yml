@@ -35,7 +35,7 @@ services:
     entrypoint: wait-for-it.sh db:5432 -s -- wait-for-it.sh redis:6379 -s -- wait-for-it.sh memcache:11211 -s --
 
   db:
-    image: postgres
+    image: postgres:10
 
   redis:
     image: redis
