@@ -35,12 +35,12 @@ services:
     entrypoint: wait-for-it.sh db:5432 -s -- wait-for-it.sh redis:6379 -s -- wait-for-it.sh memcache:11211 -s --
 
   db:
-    image: postgres:10
+    image: postgres:15-alpine
     environment:
       POSTGRES_PASSWORD: password
 
   redis:
-    image: redis
+    image: redis:7-alpine
 
   memcache:
-    image: tutum/memcached
+    image: memcached:1.6.18-alpine
