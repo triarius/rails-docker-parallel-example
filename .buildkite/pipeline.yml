@@ -34,13 +34,12 @@ steps:
                   value: password
             - image: redis:latest
             - image: tutum/memcached:latest
-          containers:
-            podSpec:
-              nodeSelector:
-                kubernetes.io/arch: arm64
-              serviceAccount: ecr-push
-              containers:
-                - name: app
-                  image: 253213882263.dkr.ecr.ap-southeast-2.amazonaws.com/rails-parallel-example:$BUILDKITE_COMMIT
-                  command:
-                    - scripts/ci/parallel_specs.sh
+          podSpec:
+            nodeSelector:
+              kubernetes.io/arch: arm64
+            serviceAccount: ecr-push
+            containers:
+              - name: app
+                image: 253213882263.dkr.ecr.ap-southeast-2.amazonaws.com/rails-parallel-example:$BUILDKITE_COMMIT
+                command:
+                  - scripts/ci/parallel_specs.sh
