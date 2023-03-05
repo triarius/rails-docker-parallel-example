@@ -2,7 +2,6 @@ agents:
   queue: kubernetes
 steps:
   - name: ":docker: Build test image"
-    skip: true
     key: build-docker
     plugins:
       - kubernetes:
