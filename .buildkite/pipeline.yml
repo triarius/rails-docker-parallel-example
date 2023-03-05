@@ -40,6 +40,6 @@ steps:
                 kubernetes.io/arch: arm64
               serviceAccount: ecr-push
               containers:
-                - image: debian:latest
+                - image: 253213882263.dkr.ecr.ap-southeast-2.amazonaws.com/rails-parallel-example:$BUILDKITE_COMMIT
                   command:
                     - scripts/ci/parallel_specs.sh
