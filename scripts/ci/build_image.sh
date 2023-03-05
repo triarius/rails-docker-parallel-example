@@ -4,11 +4,15 @@ set -Eeufo pipefail
 
 apk add docker-cli-buildx aws-cli
 
-REPO=253213882263.dkr.ecr.ap-southeast-2.amazonaws.com
+ACCOUNT_ID=253213882263
+REGION=ap-southeast-2
+REPO=rails-parallel-example
+
+REGISTRY="$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com"
 
 echo "--- Logging into ECR :ecr:"
 aws ecr get-login-password --region ap-southeast-2 |
-  docker login --username AWS --password-stdin "$REPO"
+  docker login --username AWS --password-stdin "$REGISTRY"
 
 
 builder_name=$(
@@ -22,10 +26,17 @@ builder_name=$(
 trap "docker buildx rm $builder_name" EXIT
 
 echo "--- Building App Image :docker:"
-docker buildx build \
-  --progress plain \
-  --builder "$builder_name" \
-  --push \
-  --platform linux/amd64,linux/arm64 \
-  --tag "$REPO/rail-parallel-example:$BUILDKITE_COMMIT" \
-  .
+if [[ "${REBUILD_IMAGES:-false}" == "true" ]] || \
+  ! aws ecr describe-images \
+    --registry-id "$ACCOUNT_ID" \
+    --repository-name "$REPO" \
+    --image-ids imageTag="$BUILDKITE_COMMIT"
+then
+  docker buildx build \
+    --progress plain \
+    --builder "$builder_name" \
+    --push \
+    --platform linux/arm64 \
+    --tag "$REGISTRY/$REPO:$BUILDKITE_COMMIT" \
+    .
+fi

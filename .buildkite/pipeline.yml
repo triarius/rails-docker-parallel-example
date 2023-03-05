@@ -36,6 +36,8 @@ steps:
             - image: tutum/memcached:latest
           containers:
             podSpec:
+              nodeSelector:
+                kubernetes.io/arch: arm64
               serviceAccount: ecr-push
               containers:
                 - image: debian:latest
