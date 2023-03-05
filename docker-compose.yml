@@ -36,6 +36,8 @@ services:
 
   db:
     image: postgres:10
+    environment:
+      POSTGRES_PASSWORD: password
 
   redis:
     image: redis
