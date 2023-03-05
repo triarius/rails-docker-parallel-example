@@ -14,7 +14,8 @@ steps:
                   value: password
             - image: redis:latest
             - image: tutum/memcached:latest
-          podSpec:
-            - image: debian:latest
-              command:
-                - scripts/ci/parallel_specs.sh
+          containers:
+            podSpec:
+              - image: debian:latest
+                command:
+                  - scripts/ci/parallel_specs.sh
