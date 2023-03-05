@@ -8,7 +8,8 @@ ENV RAILS_ENV=test
 RUN apt-get update && \
     apt-get install -y \
         postgresql-client \
-        nodejs
+        nodejs \
+        npm
 
 # Add the wait-for-it.sh script for waiting on dependent containers
 RUN curl https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh > /usr/local/bin/wait-for-it.sh \
