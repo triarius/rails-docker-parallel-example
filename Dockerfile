@@ -2,8 +2,6 @@ FROM ruby:2.7.7
 
 EXPOSE 5000
 
-ENV RAILS_ENV=test
-
 RUN apt-get update && \
     apt-get install -y \
         postgresql-client \
