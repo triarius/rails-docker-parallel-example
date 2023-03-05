@@ -1,7 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-set -euo pipefail
+set -euf
 
 rake db:reset
-
 rake knapsack:rspec

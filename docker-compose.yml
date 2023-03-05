@@ -15,9 +15,9 @@ services:
     env_file:
       - ".env-sample"
     environment:
-      PGHOST: db
+      PGHOST: localhost
       PGUSER: postgres
-      REDIS_URL: redis://redis
+      REDIS_URL: redis://localhost
       MEMCACHE_SERVERS: memcache
       # CI envs
       CI:

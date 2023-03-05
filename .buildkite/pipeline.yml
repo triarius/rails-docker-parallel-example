@@ -1,12 +1,20 @@
+agents:
+  queue: kubernetes
 steps:
-  - name: ":rspec:"
-    command: "scripts/ci/parallel_specs.sh"
-    artifact_paths: "log/**/*"
+  - label: ":rspec:"
+    parallelism: 20
     env:
       RAILS_ENV: test
     plugins:
-      - docker-compose#v3.9.0:
-          run: app
-    parallelism: 20
-    agents:
-      queue: $BUILDKITE_AGENT_META_DATA_QUEUE
+      - kubernetes:
+          sidecars:
+            - image: postgres:13
+              env:
+                - name: POSTGRES_PASSWORD
+                  value: password
+            - image: redis:latest
+            - image: tutum/memcached:latest
+          podSpec:
+            - image: debian:latest
+              command:
+                - scripts/ci/parallel_specs.sh

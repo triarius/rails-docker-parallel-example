@@ -4,7 +4,6 @@ EXPOSE 5000
 
 ENV RAILS_ENV=test
 
-# Add official postgresql apt deb source
 RUN apt-get update && \
     apt-get install -y \
         postgresql-client \
@@ -19,8 +18,7 @@ WORKDIR /app
 
 # Install Rubygems first
 ADD Gemfile Gemfile.lock /app/
-RUN gem install bundler \
-    && bundle install -j 32
+RUN gem install bundler && bundle install -j 32
 
 # Install npm libraries next
 ADD package.json package-lock.json /app/
