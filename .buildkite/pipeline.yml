@@ -25,7 +25,6 @@ steps:
     parallelism: 20
     env:
       RAILS_ENV: test
-    command: scripts/ci/parallel_specs.sh
     plugins:
       - kubernetes:
           sidecars:
