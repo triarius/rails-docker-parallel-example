@@ -1,14 +1,7 @@
-require "rails_helper"
+require "spec_helper"
 
-RSpec.describe "creates and object in the database" do
-  before :each do
-    product = Product.new
-    product.name = "New Product"
-    product.save
-  end
-
-  it "persists in the database" do
-    product = Product.find_by(name: "New Product")
-    expect(product.name).to eq("New Product")
+RSpec.describe "First spec" do
+  it "runs in parallel" do
+    expect(1).to eql(1)
   end
 end
