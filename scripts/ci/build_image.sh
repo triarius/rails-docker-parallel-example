@@ -2,7 +2,7 @@
 
 set -Eeufo pipefail
 
-apk add docker-cli-buildx aws-cli
+apk add --update-cache aws-cli
 
 ACCOUNT_ID=253213882263
 REGION=ap-southeast-2
