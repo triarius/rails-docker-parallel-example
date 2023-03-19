@@ -27,13 +27,13 @@ steps:
     plugins:
       - kubernetes:
           sidecars:
-            - image: postgres:13
+            - image: postgres:13-alpine
               env:
                 - name: POSTGRES_PASSWORD
                   value: password
               args: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
-            - image: redis:latest
-            - image: tutum/memcached:latest
+            - image: redis:7-alpine
+            - image: memcached:1.6alpine
           podSpec:
             nodeSelector:
               kubernetes.io/arch: arm64
