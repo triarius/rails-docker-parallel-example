@@ -31,6 +31,7 @@ steps:
               env:
                 - name: POSTGRES_PASSWORD
                   value: password
+              args: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
             - image: redis:latest
             - image: tutum/memcached:latest
           podSpec:
